@@ -1,0 +1,81 @@
+---
+title: "lab_4_answers.md"
+author: "Dana Wyman"
+date: "1/31/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Question 1:
+
+```{r diamonds, echo=FALSE}
+library(ggplot2)
+plot.diamonds <- ggplot(diamonds, aes(clarity, fill = cut)) + geom_bar() +
+  theme(axis.text.x = element_text(angle=70, vjust=0.5))
+plot.diamonds
+ggsave("diamonds.tif",device="tiff", dpi = 600)
+#cmd <- "/Users/danawyman/EE283/lab_4/./convert_plots.sh /Users/danawyman/EE283/lab_4"
+#system(cmd)
+```
+
+## Question 2:
+```{r}
+library(ggpubr)
+p1 <- ggarrange(plot.diamonds,  
+                ggarrange(plot.diamonds, plot.diamonds, nrow = 2, labels = c("B", "C"), legend = FALSE), 
+                ncol = 2, labels = "A", common.legend = TRUE) 
+p1
+```
+### Flip the layouts:
+```{r}
+p2 <- ggarrange(plot.diamonds, ggarrange(plot.diamonds, plot.diamonds, ncol = 2, labels = c("B", "C"), legend = FALSE), nrow = 2, labels = "A", common.legend = TRUE) 
+p2
+```
+
+## Question 3:
+```{r}
+library(tidyverse)
+readr::write_csv(diamonds, "/Users/danawyman/EE283/lab_4/diamonds.csv")
+```
+In my R scripts, I like to create a function to process the input options like this. I call it at the beginning of the script.
+```{r}
+library("optparse")
+parse_options <- function() {
+
+    option_list <- list(
+        make_option(c("--infile"), action = "store", dest = "infile",
+                    default = NULL, help = "Input file"),
+        make_option(c("--outfile"), action = "store", dest = "outfile",
+                    default = NULL, help = "Output file")
+        )
+
+    opt <- parse_args(OptionParser(option_list=option_list))
+    return(opt)
+}
+```
+Littler did not work on my computer, so this is how I run the script instead:
+```{r}
+system("Rscript /Users/danawyman/EE283/lab_4/foo.r --infile ~/EE283/lab_4/diamonds.csv --outfile ~/EE283/lab_4/out.csv")
+```
+## Question 4
+```{r}
+library(reticulate)
+use_python("/usr/bin/python3")
+pd <- import("pandas", convert=F)
+x = data.frame(x=rnorm(100),y=rnorm(100))
+y = pd$DataFrame(r_to_py(x))
+z = py_to_r(y$describe())
+print(z)
+```
+### Getting rid of convert=F and the r_to_py and py_to_r stuff does not work
+```{r}
+#library(reticulate)
+#use_python("/usr/bin/python3")
+#pd <- import("pandas", convert=T)
+#x = data.frame(x=rnorm(100),y=rnorm(100))
+#y = pd$DataFrame(x)
+#z = y$describe()
+#print(y)
+```
