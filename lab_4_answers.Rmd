@@ -79,3 +79,10 @@ print(z)
 #z = y$describe()
 #print(y)
 ```
+```{python}
+import pandas as pd
+x = pd.read_csv("data2.txt",sep=" ")
+```
+```{r}
+py$x
+```

@@ -249,15 +249,15 @@ x = data.frame(x=rnorm(100),y=rnorm(100))
 y = pd$DataFrame(r_to_py(x))
 z = py_to_r(y$describe())
 print(z)</code></pre>
-<pre><code>##                  x            y
-## count 100.00000000 100.00000000
-## mean    0.05450139   0.09691868
-## std     1.13685308   0.91693630
-## min    -2.57817284  -1.65486458
-## 25%    -0.62254431  -0.56392619
-## 50%     0.05687186   0.13719749
-## 75%     0.84996060   0.72932745
-## max     2.41762070   2.60553498</code></pre>
+<pre><code>##                 x            y
+## count 100.0000000 100.00000000
+## mean    0.1249731   0.09840198
+## std     1.0132726   0.91463404
+## min    -2.5368432  -2.29148107
+## 25%    -0.6755870  -0.41649713
+## 50%     0.1226194  -0.04243183
+## 75%     0.8514639   0.66054842
+## max     2.3969874   2.41273882</code></pre>
 <div id="getting-rid-of-convertf-and-the-r_to_py-and-py_to_r-stuff-does-not-work" class="section level3">
 <h3>Getting rid of convert=F and the r_to_py and py_to_r stuff does not work</h3>
 <pre class="r"><code>#library(reticulate)
@@ -267,6 +267,15 @@ print(z)</code></pre>
 #y = pd$DataFrame(x)
 #z = y$describe()
 #print(y)</code></pre>
+<pre class="python"><code>import pandas as pd
+x = pd.read_csv(&quot;data2.txt&quot;,sep=&quot; &quot;)</code></pre>
+<pre class="r"><code>py$x</code></pre>
+<pre><code>##   experiment    result
+## 1          A 0.1512520
+## 2          A 0.1351351
+## 3          B 1.3512513
+## 4          B 2.1251251
+## 5          C 1.1000000</code></pre>
 </div>
 </div>
 
